@@ -10,13 +10,11 @@ import "./Profile.css";
 const Profile = () => {
   const authContext = useAuthContext();
   const { favoritesData, setFavoritesData } = useFavoritesContext();
-  console.log(authContext.user);
 
   useEffect(() => {
     const fetch = async () => {
       try {
         const data = await profile(authContext.user.id);
-        debugger;
         setFavoritesData(data);
       } catch (error) {
         console.error(error);
@@ -39,7 +37,9 @@ const Profile = () => {
 
       <div className="container">
         <div className="mt-4 title">
-          <p>Hola! Esta es tu agenda de eventos.</p>
+          <p>
+            Hola {authContext.user.firstName}! Esta es tu agenda de eventos.
+          </p>
         </div>
         <div className="row mt-4 mb-4">{loadedCard()}</div>
       </div>
