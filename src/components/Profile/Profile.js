@@ -10,11 +10,13 @@ import "./Profile.css";
 const Profile = () => {
   const authContext = useAuthContext();
   const { favoritesData, setFavoritesData } = useFavoritesContext();
+  console.log(authContext.user);
 
   useEffect(() => {
     const fetch = async () => {
       try {
         const data = await profile(authContext.user.id);
+        debugger;
         setFavoritesData(data);
       } catch (error) {
         console.error(error);
