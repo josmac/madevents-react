@@ -1,0 +1,17 @@
+.simple{
+  background-color: #808080;
+  color:#fff;
+}
+.simple a {
+  color:#cc2549;
+}
+
+.heart {
+  background:none;
+  border:none;
+  font-size: 20px;
+  outline:none;
+}
+.heart:focus {
+  outline:none;
+}

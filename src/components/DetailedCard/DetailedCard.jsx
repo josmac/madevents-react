@@ -1,14 +1,17 @@
 import React from "react";
-import { getDays, getUrl } from "../../services/api-client";
+import {
+  getDates,
+  getDays,
+  getDaysArray,
+  getUrl,
+} from "../../services/api-client";
 import ReactHtmlParser from "react-html-parser";
 
 const DetailedCard = ({ event }) => {
-  console.log(event);
   const title = event.basicData.name._cdata;
   const category = event.extradata.categorias.categoria.item[1]._text;
-  const startDate = event.extradata.fechas.rango.inicio._text;
-  const endDate = event.extradata.fechas.rango.fin._text;
-  const daysArray = event.extradata.fechas.rango.dias._text.split(",");
+  const datesRange = getDates(event);
+  const daysArray = getDaysArray(event);
   const place = event.basicData.nombrert._text;
   const address = event.geoData.address._text;
   const price = event.extradata.item[2]._cdata;
@@ -26,12 +29,21 @@ const DetailedCard = ({ event }) => {
       <div className="card-body">
         <h5 className="card-title">{ReactHtmlParser(title)}</h5>
         <p className="card-text">
-          Del {startDate} al {endDate}
+          <span>📅&nbsp;&nbsp;&nbsp;</span>
+          {getDays(daysArray)}
+          {datesRange}
         </p>
-        <p className="card-text">{place}</p>
-        <p className="card-text">{address}</p>
-        <p className="card-text">{getDays(daysArray)}</p>
-        <div className="card-text">{ReactHtmlParser(price)}</div>
+        <p className="card-text">
+          📍 &nbsp;&nbsp;{place},{" "}
+          {address.startsWith("de") ? "Calle " + address : address}
+        </p>
+        <p className="card-text"></p>
+        <div className="card-text">
+          <div className="row">
+            &nbsp;&nbsp;&nbsp;&nbsp;💰&nbsp;&nbsp;
+            {ReactHtmlParser(price)}
+          </div>
+        </div>
         <div className="card-text">{ReactHtmlParser(description)}</div>
       </div>
     </div>

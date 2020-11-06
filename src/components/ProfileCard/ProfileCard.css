@@ -1,0 +1,22 @@
+.trash {
+  background:none;
+  border:none;
+  font-size: 20px;
+  outline:none;
+}
+.trash:focus {
+  outline:none;
+}
+
+.profile-card{
+  background-color: #808080;
+  color:#fff;
+
+}
+.profile-card a {
+  color:#cc2549;
+}
+
+.price {
+  float:left;
+}

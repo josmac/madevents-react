@@ -1,17 +1,51 @@
 import axios from "axios";
 import xmljs from "xml-js";
 
-// axios.defaults.withCredentials = true; // Very important so that cookies will be set and sent with every request
+const http = axios.create({
+  baseURL: "http://localhost:3001",
+  withCredentials: true,
+});
 
-// const app = axios.create({
-//   baseURL: "http://localhost:3001",
-// });
+http.interceptors.response.use(
+  function (response) {
+    return response.data;
+  },
+  function (error) {
+    if (error.response?.status === 401) {
+      localStorage.clear();
+      window.location.assign("/");
+    }
 
-// export const getEvents = () => {
-//   return axios.get("https://ih-beers-api2.herokuapp.com/beers").then(res => {
-//     console.log(res.data)
-//   });
-// };
+    return Promise.reject(error);
+  }
+);
+
+export const login = ({ email, password }) =>
+  http.post("/login", { email, password });
+
+export const favorites = (data) => http.post("/favorites", data);
+
+export const profile = (userId) => http.get(`/profile/${userId}`);
+
+export const logout = () => http.post("/logout");
+
+export const createUser = ({
+  firstName,
+  lastName,
+  email,
+  password,
+  avatar,
+}) => {
+  const formData = new FormData();
+
+  formData.append("firstName", firstName);
+  formData.append("lastName", lastName);
+  formData.append("email", email);
+  formData.append("password", password);
+  formData.append("avatar", avatar);
+
+  return http.post("/users", formData);
+};
 
 export const getEvents = () => {
   return axios
@@ -22,6 +56,7 @@ export const getEvents = () => {
       const events = JSON.parse(
         xmljs.xml2json(res.data, { compact: true, spaces: 2 })
       );
+      console.log("request");
       return events;
     });
 };
@@ -50,5 +85,35 @@ export const getUrl = (e) => {
     return e.multimedia.media[0].url._text;
   } else {
     return e.multimedia.media.url._text;
+  }
+};
+
+export const getDates = (e) => {
+  if (Array.isArray(e.extradata.fechas.rango)) {
+    return `del ${e.extradata.fechas.rango[0].inicio._text} al ${e.extradata.fechas.rango[0].fin._text} y del ${e.extradata.fechas.rango[1].inicio._text} al ${e.extradata.fechas.rango[1].fin._text}`;
+  } else {
+    return `del ${e.extradata.fechas.rango.inicio._text} al ${e.extradata.fechas.rango.fin._text}`;
+  }
+};
+
+export const getDaysArray = (e) => {
+  if (Array.isArray(e.extradata.fechas.rango)) {
+    return e.extradata.fechas.rango[0].dias._text.split(",");
+  } else if (e.extradata.fechas.rango === undefined) {
+    return "Sin datos";
+  } else {
+    return e.extradata.fechas.rango.dias._text.split(",");
+  }
+};
+
+export const search = (search) => {
+  console.log(search);
+};
+
+export const getCategory = (e) => {
+  if (e.extradata.categorias.categoria.item === undefined) {
+    return "Sin categoría";
+  } else {
+    return e.extradata.categorias.categoria.item[1]._text;
   }
 };

@@ -1,0 +1,39 @@
+.navbar {
+  background-image:
+  radial-gradient(circle at 110%, #cc2549, #cc2549 20%, #d6506d 20%, #d6506d 40%, rgba(224,124,145,0.9) 40%, rgba(224,124,145,0.9) 60%,rgba(234,167,182,0.85) 60%,rgba(234,167,182,0.85));
+  height: 80px;
+  width: 100%;
+  font-size: 1.5em;
+}
+.avatar img{
+  border-radius: 50%;
+  width: 50px;
+}
+
+.logout { 
+  border:none;
+  font-size: 20px;
+  background:none;
+}
+
+.logout:focus {
+  outline:none;
+}
+
+.events-btn {
+  border:none;
+  font-size: 20px;
+  background:none;
+
+}
+.events-btn:focus {
+  outline:none
+}
+
+.nav-logo{
+  height: 40px;
+}
+
+
+
+

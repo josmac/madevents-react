@@ -1,53 +1,48 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { getEvents } from "../../services/api-client";
 import SimpleCard from "../SimpleCard/SimpleCard";
-import Header from "../Header/Header";
+import NavBar from "../NavBar/NavBar";
+import { useEventsContext } from "../../contexts/EventsContext";
+import Map from "../Map/Map";
+import Footer from "../Footer/Footer";
 
 const Events = () => {
-  const [events, setEvents] = useState(null);
+  const { events } = useEventsContext();
 
-  useEffect(() => {
-    getEvents().then((response) => {
-      setEvents(response.serviceList.service);
-    });
-  }, []);
+  // useEffect(() => {
+  //   getEvents().then((response) => {
+  //     setEvents(response.serviceList.service);
+  //   });
+  // }, []);
 
-  const eventList =
-    events &&
-    events.slice(0, 4).map((event) => {
-      return (
-        <div className="col-sm mt-4">
-          <Link
-            className="eventDetails"
-            to={`/events/${event._attributes.id}`}
-            style={{ textDecoration: "none", color: "#000" }}
-          >
-            <div>
-              <SimpleCard event={event}></SimpleCard>
-            </div>
-          </Link>
-        </div>
-      );
-    });
+  const eventsSubset = events && events.slice(0, 4);
+
+  const eventList = eventsSubset.map((event) => {
+    return (
+      <div className="col-sm mb-4">
+        <SimpleCard event={event}></SimpleCard>
+      </div>
+    );
+  });
 
   return (
     <div>
-      <Header />
+      <NavBar />
+
       <div className="container">
         {eventList ? (
-          <div className="container">
-            <div className="col-12">
-              <div className="row mt-4">
-                <h1>Últimos eventos</h1>
-              </div>
-              <div className="row">{eventList}</div>
+          <div className="col-12">
+            <div className="row mt-5" style={{ height: "55vh" }}>
+              <Map props={events} />
             </div>
+            <div className="mt-4 title">
+              <p>Últimos eventos</p>
+            </div>
+            <div className="row">{eventList}</div>
           </div>
         ) : (
           "loading"
         )}
       </div>
+      <Footer />
     </div>
   );
 };

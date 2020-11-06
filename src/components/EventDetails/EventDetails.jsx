@@ -1,23 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { getEvents } from "../../services/api-client";
+import React from "react";
+import { useEventsContext } from "../../contexts/EventsContext";
 import DetailedCard from "../DetailedCard/DetailedCard";
-import Header from "../Header/Header";
+import NavBar from "../NavBar/NavBar";
 import Map from "../Map/Map";
+import Footer from "../Footer/Footer";
 
 const EventDetails = (props) => {
-  const [event, setEvent] = useState(null);
+  const { events } = useEventsContext();
 
-  useEffect(() => {
-    getEvents().then((response) => {
-      const eventData = response.serviceList.service;
-      const eventDetails = eventData.find(
-        (e) => e._attributes.id === props.match.params.id
-      );
-      setEvent(eventDetails);
-    });
-  }, []);
-
-  console.log(event);
+  const event = events?.find((e) => e._attributes.id === props.match.params.id);
 
   const loadedCard = () => {
     return event ? <DetailedCard event={event} /> : "loading";
@@ -25,15 +16,16 @@ const EventDetails = (props) => {
 
   return (
     <div>
-      <Header />
+      <NavBar />
       <div className="container">
         <div className="row">
-          <div className="col-sm-6">{loadedCard()}</div>
-          <div className="col-sm-6">
-            {event ? <Map position={event.geoData} /> : "loading"}
+          <div className="col-sm m-4">{loadedCard()}</div>
+          <div className="col-sm m-4">
+            {event ? <Map props={event} /> : "loading"}
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

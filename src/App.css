@@ -1,7 +1,27 @@
-.header {
-  background-color: #cc2549;
-  height: 80px;
-  width: 100%;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.85em;
+  min-height: 100vh;
+  position: relative;
+  margin: 0;
+  padding-bottom: 80px;
+  box-sizing: border-box;
 }
 
+Footer {
+  width:100%;
+  background-color: #808080;
+  position: absolute;
+  bottom: 0;
+  height: 80px;
+  text-align:center;
+  line-height: 80px;
+  color:#fff;
+}
 
+.title {
+  color:#808080;
+  font-size: 3em;
+}
