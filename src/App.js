@@ -7,9 +7,7 @@ import EventDetails from "./components/EventDetails/EventDetails";
 import UserForm from "./components/SignupForm/SignupForm";
 import LoginForm from "./components/LoginForm/LoginForm";
 import Profile from "./components/Profile/Profile";
-import AuthenticatedRoute, {
-  NotAuthenticatedRoute,
-} from "./components/AuthenticatedRoute";
+import { NotAuthenticatedRoute } from "./components/AuthenticatedRoute";
 
 function App() {
   return (
@@ -20,7 +18,7 @@ function App() {
         <Route exact path="/events/:id" component={EventDetails} />
         <NotAuthenticatedRoute exact path="/signup" component={UserForm} />
         <NotAuthenticatedRoute exact path="/login" component={LoginForm} />
-        <AuthenticatedRoute exact path="/profile/:id" component={Profile} />
+        <Route exact path="/profile/:id" component={Profile} />
       </Switch>
     </div>
   );
