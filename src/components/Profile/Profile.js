@@ -37,9 +37,7 @@ const Profile = () => {
 
       <div className="container">
         <div className="mt-4 title">
-          <p>
-            Hola {authContext.user.firstName}! Esta es tu agenda de eventos.
-          </p>
+          <p>Hola! Esta es tu agenda de eventos.</p>
         </div>
         <div className="row mt-4 mb-4">{loadedCard()}</div>
       </div>
