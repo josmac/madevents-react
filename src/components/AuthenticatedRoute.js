@@ -4,11 +4,7 @@ import { useAuthContext } from "../contexts/AuthContext";
 
 const RedirectToLogin = () => <Redirect to="/login" />;
 
-const RedirectToProfile = () => {
-  const { user } = useAuthContext();
-
-  return <Redirect to={`/profile/${user.id}`} />;
-};
+const RedirectToHome = () => <Redirect to="/" />;
 
 const AuthenticatedRoute = (props) => {
   const { user } = useAuthContext();
@@ -20,7 +16,7 @@ const AuthenticatedRoute = (props) => {
 export const NotAuthenticatedRoute = (props) => {
   const { user } = useAuthContext();
   return (
-    <Route {...props} component={!user ? props.component : RedirectToProfile} />
+    <Route {...props} component={!user ? props.component : RedirectToHome} />
   );
 };
 

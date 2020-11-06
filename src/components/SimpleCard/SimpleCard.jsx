@@ -27,7 +27,7 @@ const SimpleCard = ({ event }) => {
   const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
-    if (authContext.user) {
+    if (authContext.user && favoritesData) {
       const favoritesContext = favoritesData.favorites;
       const favoriteClicked = favoritesContext.find(
         (f) => f.eventId === event._attributes.id
