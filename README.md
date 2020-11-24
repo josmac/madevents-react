@@ -1,3 +1,3 @@
-#madevents-react
+# madevents-react
 
-madevents app React front end
+madevents app React front end.
